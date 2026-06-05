@@ -135,7 +135,7 @@ def renew(user):
 
 if __name__ == "__main__":
     allSuccess = True
-    for username in usernames:
+    for username in USERNAMES.split():
         if not renew(username):
             allSuccess = False
     sys.exit(0 if allSuccess else 1)
