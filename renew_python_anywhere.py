@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 # Load environment variables from .env file (for local testing)
 load_dotenv()
 
-USERNAME = os.environ.get('PA_USERNAME')
+USERNAMES = os.environ.get('PA_USERNAME')
 PASSWORD = os.environ.get('PA_PASSWORD')
 
 if not USERNAME or not PASSWORD:
@@ -18,7 +18,7 @@ if not USERNAME or not PASSWORD:
 LOGIN_URL = "https://www.pythonanywhere.com/login/"
 DASHBOARD_URL = f"https://www.pythonanywhere.com/user/{USERNAME}/webapps/"
 
-def renew():
+def renew(user):
     session = requests.Session()
     session.headers.update({
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
@@ -26,7 +26,7 @@ def renew():
     
     try:
         # 1. Get login page
-        print(f"🔐 Logging in as {USERNAME}...")
+        print(f"🔐 Logging in as {user}...")
         login_page = session.get(LOGIN_URL, timeout=10)
         login_page.raise_for_status()
         
@@ -42,7 +42,7 @@ def renew():
         # 2. Submit login
         payload = {
             'csrfmiddlewaretoken': csrf_token,
-            'auth-username': USERNAME,
+            'auth-username': user,
             'auth-password': PASSWORD,
             'login_view-current_step': 'auth'
         }
@@ -134,5 +134,8 @@ def renew():
         return False
 
 if __name__ == "__main__":
-    success = renew()
-    sys.exit(0 if success else 1)
+    allSuccess = True
+    for username in usernames:
+        if not renew(username):
+            allSuccess = False
+    sys.exit(0 if allSuccess else 1)
