@@ -16,7 +16,6 @@ if not USERNAMES or not PASSWORD:
     sys.exit(1)
 
 LOGIN_URL = "https://www.pythonanywhere.com/login/"
-DASHBOARD_URL = f"https://www.pythonanywhere.com/user/{USERNAME}/webapps/"
 
 def renew(user):
     session = requests.Session()
