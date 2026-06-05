@@ -11,7 +11,7 @@ load_dotenv()
 USERNAMES = os.environ.get('PA_USERNAME')
 PASSWORD = os.environ.get('PA_PASSWORD')
 
-if not USERNAME or not PASSWORD:
+if not USERNAMES or not PASSWORD:
     print("❌ Error: PA_USERNAME and PA_PASSWORD must be set")
     sys.exit(1)
 
