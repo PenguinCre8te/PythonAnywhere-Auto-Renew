@@ -72,7 +72,7 @@ def renew(user):
         print("📊 Checking dashboard...")
         time.sleep(1)  # Be polite to the server
         
-        dashboard = session.get(DASHBOARD_URL, timeout=10)
+        dashboard = session.get(f"https://www.pythonanywhere.com/user/{user}/webapps/", timeout=10)
         dashboard.raise_for_status()
         soup = BeautifulSoup(dashboard.content, 'html.parser')
         
@@ -105,7 +105,7 @@ def renew(user):
         result = session.post(
             extend_url,
             data={'csrfmiddlewaretoken': dashboard_csrf['value']},
-            headers={'Referer': DASHBOARD_URL},
+            headers={'Referer': f"https://www.pythonanywhere.com/user/{user}/webapps/"},
             timeout=10
         )
         result.raise_for_status()
